@@ -7,13 +7,14 @@
  * @author User
  */
 public class VIPTicket extends Ticket{
+
     private int seatNo;
 
     public VIPTicket(int seatNo) {
         this.seatNo = seatNo;
     }
 
-    public VIPTicket(int seatNo, int price, concertticket.ticketInfo ticketInfo, int availableTicket) {
+    public VIPTicket(int seatNo, int price, TicketInfo ticketInfo, int availableTicket) {
         super(price, ticketInfo, availableTicket);
         this.seatNo = seatNo;
         setDistFromStage("Moderate");

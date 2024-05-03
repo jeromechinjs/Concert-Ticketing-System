@@ -11,7 +11,7 @@ public class RockZoneTicket extends Ticket{
     public RockZoneTicket() {
     }
 
-    public RockZoneTicket(int price, concertticket.ticketInfo ticketInfo, int availableTicket) {
+    public RockZoneTicket(int price, TicketInfo ticketInfo, int availableTicket) {
         super(price, ticketInfo, availableTicket);
         setDistFromStage("Close");
     }

@@ -10,14 +10,14 @@ public abstract class Ticket {
     private int price;
     private int quantity;
     private int TotalQuantity =0;
-    private ticketInfo ticketInfo;
+    private TicketInfo ticketInfo;
     private int availableTicket;
     private String distFromStage;
 
     public Ticket() {
     }
 
-    public Ticket(int price, ticketInfo ticketInfo, int availableTicket) {
+    public Ticket(int price, TicketInfo ticketInfo, int availableTicket) {
         this.price = price;
         this.ticketInfo = ticketInfo;
         this.availableTicket = availableTicket;
@@ -52,7 +52,7 @@ public abstract class Ticket {
         this.distFromStage = distFromStage;
     }
 
-    public Ticket(ticketInfo ticketInfo) {
+    public Ticket(TicketInfo ticketInfo) {
         this.ticketInfo = ticketInfo;
         
     }
@@ -66,11 +66,11 @@ public abstract class Ticket {
     }
 
 
-    public ticketInfo getTicketInfo() {
+    public TicketInfo getTicketInfo() {
         return ticketInfo;
     }
 
-    public void setTicketInfo(ticketInfo ticketInfo) {
+    public void setTicketInfo(TicketInfo ticketInfo) {
         this.ticketInfo = ticketInfo;
     }
 

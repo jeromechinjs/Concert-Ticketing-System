@@ -13,7 +13,7 @@ public class NormalZoneTicket extends Ticket{
         this.seatNo = seatNo;
     }
 
-    public NormalZoneTicket(int seatNo, int price, concertticket.ticketInfo ticketInfo, int availableTicket) {
+    public NormalZoneTicket(int seatNo, int price, TicketInfo ticketInfo, int availableTicket) {
         super(price, ticketInfo, availableTicket);
         this.seatNo = seatNo;
         setDistFromStage("Far");

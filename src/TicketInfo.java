@@ -6,16 +6,15 @@
  *
  * @author User
  */
-public class ticketInfo {
+public class TicketInfo {
     private String artist;
     private String date;
     private String venue;
 
-    public ticketInfo() {
+    public TicketInfo() {
     }
 
-    public ticketInfo( String artist, String date, String venue) {
-      
+    public TicketInfo( String artist, String date, String venue) {
         this.artist = artist;
         this.date = date;
         this.venue = venue;
