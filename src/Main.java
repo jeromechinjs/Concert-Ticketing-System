@@ -18,8 +18,16 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        Person[] person = new Person[3];
+        // establish ui and initiator
+        Initializer init = new Initializer();
+        UI ui = new UI();
 
+        // example of calling UI
+        ui.mainMenuDisplay();
+
+        // Sample of initiating object
+        // Person[] person = init.personInit();
+        Person[] person = new Person[3];
         person[0] = new Customer(10000, "Wong Xiao Hei", "0177784557", "abcd1234");
         person[1] = new VIPCustomer(15000, "Lee Ai Kun", "0177789557", "iamikun");
         person[2] = new Staff("Kok", "0199447000", "kok123");
@@ -63,12 +71,6 @@ public class Main {
         RockZoneTicket.add(JayChouRockZoneTicket);
         VIPTicket.add(JayChouVIPTicket);
         NormalZoneTicket.add(JayChouNormalZoneTicket);
-
-        // Added a new directoring to store UI, input validation so on.
-        UI ui = new UI();
-
-        // example of calling UI
-        ui.mainMenuDisplay();
 
         // Start of the program
         boolean flag = true;
