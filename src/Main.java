@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -9,6 +10,7 @@ public class Main {
     private static void print(String s) {
         System.out.print(s);
     }
+
     private static void println(String s) {
         System.out.println(s);
     }
@@ -61,6 +63,12 @@ public class Main {
         RockZoneTicket.add(JayChouRockZoneTicket);
         VIPTicket.add(JayChouVIPTicket);
         NormalZoneTicket.add(JayChouNormalZoneTicket);
+
+        // Added a new directoring to store UI, input validation so on.
+        UI ui = new UI();
+
+        // example of calling UI
+        ui.mainMenuDisplay();
 
         // Start of the program
         boolean flag = true;
