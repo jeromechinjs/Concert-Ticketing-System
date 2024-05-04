@@ -18,11 +18,11 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        Person[] person = new Person[3];
-
-        person[0] = new Customer(10000, "Wong Xiao Hei", "0177784557", "abcd1234");
-        person[1] = new VIPCustomer(15000, "Lee Ai Kun", "0177789557", "iamikun");
-        person[2] = new Staff("Kok", "0199447000", "kok123");
+        ArrayList<Person> person = new ArrayList<Person>();
+        // Some default users
+        person.add(new Customer(10000, "Wong Xiao Hei", "0177784557", "abcd1234"));
+        person.add(new VIPCustomer(15000, "Lee Ai Kun", "0177789557", "iamikun"));
+        person.add(new Staff("Kok", "0199447000", "kok123"));
 
         ArrayList<TicketInfo> ticketInfo = new ArrayList<TicketInfo>();
         TicketInfo CaiXuKunTicketinfo = new TicketInfo("CaiXuKun", "25 JUN 2023", "Arena of Stars");
@@ -79,29 +79,63 @@ public class Main {
             Staff s = new Staff();
             int logInStatus = 0;
 
-            LogInLoop: while (logInStatus != 1) {
+            println("Register or Login?\n");
+            println("1. Register");
+            println("2. Login\n");
+            print("Your selection: ");
+            int selection = sc.nextInt();
+
+            RegisterLoop: while (selection == 1) {
                 println("Please enter your username and password.");
                 print("Username: ");
-                String username = sc.nextLine();
+                String username = sc.next();
+
+                print("Phone Number: ");
+                String phone = sc.next();
 
                 print("Password: ");
-                String password = sc.nextLine();
+                String password = sc.next();
 
-                for (int i = 0; i < person.length; i++) {
-                    logInStatus = person[i].checkUsernameAndPassword(username, password);
+                double walletBalance = 0;
+
+                Customer newCustomer = new Customer(walletBalance, username, phone, password);
+                person.add(newCustomer);
+                println("Registered Successfully!\n");
+                println("You may login now...");
+                selection = 2;
+                
+                break;
+            }
+
+            LogInLoop: while (selection == 2 && logInStatus != 1) {
+                println("Please enter your username and password.");
+                print("Username: ");
+                String username = sc.next();
+
+                print("Password: ");
+                String password = sc.next();
+
+                for (int i = 0; i < person.size(); i++) {
+                    logInStatus = person.get(i).checkUsernameAndPassword(username, password);
                     if (logInStatus == 1) {
                         println("Login Successfully!");
-                        if (person[i] instanceof VIPCustomer) {
-                            println("\nWelcome VIP Customer " + person[i].getName());
-                            c = (VIPCustomer) person[i];
-                        } else if (person[i] instanceof Customer) {
-                            println("\nWelcome Customer" + person[i].getName());
-                            c = (Customer) person[i];
-                        } else {
-                            println("\nWelcome Staff " + person[i].getName());
-                            s = (Staff) person[i];
+                        String customerType = person.get(i) instanceof VIPCustomer ? "VIP Customer"
+                                : person.get(i) instanceof Customer ? "Customer" : "Staff"; 
+                        
+                        switch (customerType) {
+                            case "VIP Customer":
+                                println("\nWelcome VIP Customer " + person.get(i).getName());
+                                c = (VIPCustomer) person.get(i);
+                            break; 
+                            case "Customer":
+                                println("\nWelcome Customer " + person.get(i).getName());
+                                c = (Customer) person.get(i);
+                            break;
+                            case "Staff":
+                                println("\nWelcome Staff " + person.get(i).getName());
+                                s = (Staff) person.get(i);
+                            break;
                         }
-
                         break LogInLoop;
                     }
                 }
@@ -167,6 +201,17 @@ public class Main {
 
             // if user login
             else {
+                if (c.getWalletBalance() == 0) {
+                    print("We noticed that you have not top up your wallet yet. Do you want to top up now? (Y/N)");
+                    char topUp = sc.next().charAt(0);
+                    if (topUp == 'Y' || topUp == 'y') {
+                        print("Enter amount to top up: ");
+                        double amount = sc.nextDouble();
+                        c.setWalletBalance(amount);
+                        println("Top up successful! Your current wallet balance is: " + c.getWalletBalance());
+                    }
+                }
+
                 // Display Concert Event
                 // Prompt user to select concert they willing to go
                 println("\nPlease Select Your Ticket");
