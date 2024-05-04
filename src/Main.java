@@ -9,6 +9,7 @@ import java.util.Scanner;
 // lets's add more comments
 
 public class Main {
+
     private static void print(String s) {
         System.out.print(s);
     }
@@ -99,19 +100,19 @@ public class Main {
                             c = (VIPCustomer) person.get(i);
                             loggedIn = true;
                             exit = true;
-                        return;
+                            return;
                         case "Customer":
                             println("\nWelcome Customer " + person.get(i).getName());
                             c = (Customer) person.get(i);
                             loggedIn = true;
-                            exit = true; 
-                        return;
+                            exit = true;
+                            return;
                         case "Staff":
                             println("\nWelcome Staff " + person.get(i).getName());
                             s = (Staff) person.get(i);
                             loggedIn = true;
                             exit = true;
-                        return;
+                            return;
                     }
                 }
             }
@@ -120,49 +121,18 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        // establish ui and initiator
+        Initializer init = new Initializer();
+        // UI ui = new UI();
+
+        // Initializing initial data
+        ArrayList<Person> person = init.personInit();// Account detail
+        ArrayList<TicketInfo> ticketInfo = init.ticketInit();
+        ArrayList<RockZoneTicket> rockZoneTickets = init.rockZoneTicketsInit();
+        ArrayList<VIPTicket> vipTickets = init.vipTicketsInit();
+        ArrayList<NormalZoneTicket> normalZoneTickets = init.normalZoneTicketsInit();
+
         Scanner sc = new Scanner(System.in);
-
-        ArrayList<Person> person = new ArrayList<Person>();
-        // Some default users
-        person.add(new Customer(10000, "Wong Xiao Hei", "0177784557", "abcd1234"));
-        person.add(new VIPCustomer(15000, "Lee Ai Kun", "0177789557", "iamikun"));
-        person.add(new Staff("Kok", "0199447000", "kok123"));
-
-        ArrayList<TicketInfo> ticketInfo = new ArrayList<TicketInfo>();
-        ticketInfo.add(
-            new TicketInfo("CaiXuKun", "25 JUN 2023", "Arena of Stars")
-        );
-        ticketInfo.add(
-            new TicketInfo("Twice", "31 JUL 2023", "Axiata Arena")
-        );
-        ticketInfo.add(
-            new TicketInfo("Jay Chou", "15 JAN 2023", "Stadium Bukit Jalil")
-        );
-
-        ArrayList<RockZoneTicket> rockZoneTickets = new ArrayList<RockZoneTicket>();
-        ArrayList<VIPTicket> vipTickets = new ArrayList<VIPTicket>();
-        ArrayList<NormalZoneTicket> normalZoneTickets = new ArrayList<NormalZoneTicket>();
-
-        // CaiXuKun Concert
-        rockZoneTickets.add(new RockZoneTicket(758, ticketInfo.get(0), 200));
-        vipTickets.add(new VIPTicket(200, 658, ticketInfo.get(0), 200));
-        normalZoneTickets.add(new NormalZoneTicket(400, 558, ticketInfo.get(0), 300));
-
-        // Twice Concert
-        rockZoneTickets.add(new RockZoneTicket(888, ticketInfo.get(1), 300));
-        vipTickets.add(new VIPTicket(300, 788, ticketInfo.get(1), 300));
-        normalZoneTickets.add(new NormalZoneTicket(600, 688, ticketInfo.get(1), 400));
-
-        // JayChou Ticket
-        rockZoneTickets.add(new RockZoneTicket(998, ticketInfo.get(2), 400));
-        vipTickets.add(new VIPTicket(400, 898, ticketInfo.get(2), 400));
-        normalZoneTickets.add(new NormalZoneTicket(800, 798, ticketInfo.get(2), 500));
-
-        // Added a new directoring to store UI, input validation so on.
-        UI ui = new UI();
-
-        // example of calling UI
-        ui.mainMenuDisplay();
 
         // Start of the program
         boolean flag = true;
@@ -171,17 +141,19 @@ public class Main {
             Staff s = new Staff();
             Boolean exit = false;
 
-            Welcome: while(!exit) {
+            Welcome: while (!exit) {
                 int selection = Welcome(sc);
 
                 if (selection == 1) {
                     Register(selection, sc, person, exit);
-                    if (exit) continue Welcome;
-                }
-                else if (selection == 2) {
+                    if (exit)
+                        continue Welcome;
+                } else if (selection == 2) {
                     Login(selection, sc, person, c, s, exit);
-                    if (exit) continue Welcome;
-                    else break Welcome;
+                    if (exit)
+                        continue Welcome;
+                    else
+                        break Welcome;
                 }
             }
 
