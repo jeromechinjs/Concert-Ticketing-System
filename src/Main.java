@@ -164,11 +164,6 @@ public class Main {
         vipTickets.add(new VIPTicket(400, 898, ticketInfo.get(2), 400));
         normalZoneTickets.add(new NormalZoneTicket(800, 798, ticketInfo.get(2), 500));
 
-        // Added a new directoring to store UI, input validation so on.
-        UI ui = new UI();
-
-        // example of calling UI
-        ui.mainMenuDisplay();
         RockZoneTicket JayChouRockZoneTicket = new RockZoneTicket(998, ticketInfo.get(2), 400);
         VIPTicket JayChouVIPTicket = new VIPTicket(400, 898, ticketInfo.get(2), 400);
         NormalZoneTicket JayChouNormalZoneTicket = new NormalZoneTicket(800, 798, ticketInfo.get(2), 500);
