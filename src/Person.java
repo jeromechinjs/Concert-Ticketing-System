@@ -44,12 +44,12 @@ public abstract class Person {
         this.password = password;
     }
     
-    public int checkUsernameAndPassword(String name, String password){
+    public Boolean checkUsernameAndPassword(String name, String password){
         if(this.name.equals(name) && this.password.equals(password)){
-            return 1;
+            return true;
         }
         else{
-            return 0;
+            return false;
         }
     }
     

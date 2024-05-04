@@ -15,6 +15,105 @@ public class Main {
         System.out.println(s);
     }
 
+    private static int Welcome(Scanner sc) {
+        println("\nWelcome to Our Ticket System");
+        println("Register or Login?\n");
+        println("1. Register");
+        println("2. Login\n");
+        print("Your selection: ");
+        int selection = sc.nextInt();
+        return selection;
+    }
+
+    private static void Register(int selection, Scanner sc, ArrayList<Person> person, Boolean exit) {
+        println("\nRegister");
+        println("------------");
+        println("Please enter your username and password. (type -1 to exit)");
+        print("Username: ");
+        String username = sc.next();
+        if (username.equals("-1")) {
+            exit = true;
+            return;
+        }
+
+        print("Phone Number: ");
+        String phone = sc.next();
+        if (phone.equals("-1")) {
+            exit = true;
+            return;
+        }
+
+        print("Password: ");
+        String password = sc.next();
+        if (password.equals("-1")) {
+            exit = true;
+            return;
+        }
+
+        double walletBalance = 0;
+
+        Customer newCustomer = new Customer(walletBalance, username, phone, password);
+        person.add(newCustomer);
+        println("Registered Successfully!\n");
+        println("You may login now...");
+    }
+
+    private static void Login(int selection,
+            Scanner sc,
+            ArrayList<Person> person,
+            Customer c,
+            Staff s,
+            Boolean exit) {
+        Boolean loggedIn = false;
+
+        while (!loggedIn) {
+            println("\nLogin");
+            println("---------");
+            println("Please enter your username and password. (type -1 to exit)");
+            print("Username: ");
+            String username = sc.next();
+            if (username == "-1" || username.equals("-1")) {
+                exit = true;
+                return;
+            }
+
+            print("Password: ");
+            String password = sc.next();
+            if (password.equals("-1")) {
+                exit = true;
+                return;
+            }
+
+            for (int i = 0; i < person.size(); i++) {
+                loggedIn = person.get(i).checkUsernameAndPassword(username, password);
+                if (loggedIn) {
+                    println("Login Successfully!");
+                    String customerType = person.get(i) instanceof VIPCustomer ? "VIP Customer"
+                            : person.get(i) instanceof Customer ? "Customer" : "Staff";
+
+                    switch (customerType) {
+                        case "VIP Customer":
+                            println("\nWelcome VIP Customer " + person.get(i).getName());
+                            c = (VIPCustomer) person.get(i);
+                            loggedIn = true;
+                        return;
+                        case "Customer":
+                            println("\nWelcome Customer " + person.get(i).getName());
+                            c = (Customer) person.get(i);
+                            loggedIn = true;
+                        return;
+                        case "Staff":
+                            println("\nWelcome Staff " + person.get(i).getName());
+                            s = (Staff) person.get(i);
+                            loggedIn = true;
+                        return;
+                    }
+                }
+            }
+            println("Login failed! Please try again");
+        }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -72,75 +171,23 @@ public class Main {
 
         // Start of the program
         boolean flag = true;
-        while (flag) {
-            println("\nWelcome to Our Ticket System");
-
+        MainLoop: while (flag) {
             Customer c = new Customer();
             Staff s = new Staff();
-            int logInStatus = 0;
+            Boolean loggedIn = false, exit = false;
 
-            println("Register or Login?\n");
-            println("1. Register");
-            println("2. Login\n");
-            print("Your selection: ");
-            int selection = sc.nextInt();
+            Welcome: while(!exit) {
+                int selection = Welcome(sc);
 
-            RegisterLoop: while (selection == 1) {
-                println("Please enter your username and password.");
-                print("Username: ");
-                String username = sc.next();
-
-                print("Phone Number: ");
-                String phone = sc.next();
-
-                print("Password: ");
-                String password = sc.next();
-
-                double walletBalance = 0;
-
-                Customer newCustomer = new Customer(walletBalance, username, phone, password);
-                person.add(newCustomer);
-                println("Registered Successfully!\n");
-                println("You may login now...");
-                selection = 2;
-                
-                break;
-            }
-
-            LogInLoop: while (selection == 2 && logInStatus != 1) {
-                println("Please enter your username and password.");
-                print("Username: ");
-                String username = sc.next();
-
-                print("Password: ");
-                String password = sc.next();
-
-                for (int i = 0; i < person.size(); i++) {
-                    logInStatus = person.get(i).checkUsernameAndPassword(username, password);
-                    if (logInStatus == 1) {
-                        println("Login Successfully!");
-                        String customerType = person.get(i) instanceof VIPCustomer ? "VIP Customer"
-                                : person.get(i) instanceof Customer ? "Customer" : "Staff"; 
-                        
-                        switch (customerType) {
-                            case "VIP Customer":
-                                println("\nWelcome VIP Customer " + person.get(i).getName());
-                                c = (VIPCustomer) person.get(i);
-                            break; 
-                            case "Customer":
-                                println("\nWelcome Customer " + person.get(i).getName());
-                                c = (Customer) person.get(i);
-                            break;
-                            case "Staff":
-                                println("\nWelcome Staff " + person.get(i).getName());
-                                s = (Staff) person.get(i);
-                            break;
-                        }
-                        break LogInLoop;
-                    }
+                if (selection == 1) {
+                    Register(selection, sc, person, exit);
+                    if (exit) continue Welcome;
                 }
-                println("Login Failed! \nPls try again.");
-
+                else if (selection == 2) {
+                    Login(selection, sc, person, c, s, exit);
+                    if (exit) continue Welcome;
+                    else break;
+                }
             }
 
             // if staff login
