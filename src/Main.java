@@ -186,7 +186,6 @@ public class Main {
                 else if (selection == 2) {
                     Login(selection, sc, person, c, s, exit);
                     if (exit) continue Welcome;
-                    else break;
                 }
             }
 
