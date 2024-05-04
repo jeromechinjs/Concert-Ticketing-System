@@ -99,19 +99,19 @@ public class Main {
                             c = (VIPCustomer) person.get(i);
                             loggedIn = true;
                             exit = true;
-                            return;
+                        return;
                         case "Customer":
                             println("\nWelcome Customer " + person.get(i).getName());
                             c = (Customer) person.get(i);
                             loggedIn = true;
-                            exit = true;
-                            return;
+                            exit = true; 
+                        return;
                         case "Staff":
                             println("\nWelcome Staff " + person.get(i).getName());
                             s = (Staff) person.get(i);
                             loggedIn = true;
                             exit = true;
-                            return;
+                        return;
                     }
                 }
             }
@@ -127,23 +127,17 @@ public class Main {
         person.add(new Customer(10000, "Wong Xiao Hei", "0177784557", "abcd1234"));
         person.add(new VIPCustomer(15000, "Lee Ai Kun", "0177789557", "iamikun"));
         person.add(new Staff("Kok", "0199447000", "kok123"));
-        // establish ui and initiator
-        Initializer init = new Initializer();
-        UI ui = new UI();
-
-        // example of calling UI
-        ui.mainMenuDisplay();
-
-        // Sample of initiating object
-        // Person[] person = init.personInit();
 
         ArrayList<TicketInfo> ticketInfo = new ArrayList<TicketInfo>();
         ticketInfo.add(
-                new TicketInfo("CaiXuKun", "25 JUN 2023", "Arena of Stars"));
+            new TicketInfo("CaiXuKun", "25 JUN 2023", "Arena of Stars")
+        );
         ticketInfo.add(
-                new TicketInfo("Twice", "31 JUL 2023", "Axiata Arena"));
+            new TicketInfo("Twice", "31 JUL 2023", "Axiata Arena")
+        );
         ticketInfo.add(
-                new TicketInfo("Jay Chou", "15 JAN 2023", "Stadium Bukit Jalil"));
+            new TicketInfo("Jay Chou", "15 JAN 2023", "Stadium Bukit Jalil")
+        );
 
         ArrayList<RockZoneTicket> rockZoneTickets = new ArrayList<RockZoneTicket>();
         ArrayList<VIPTicket> vipTickets = new ArrayList<VIPTicket>();
@@ -169,13 +163,6 @@ public class Main {
 
         // example of calling UI
         ui.mainMenuDisplay();
-        RockZoneTicket JayChouRockZoneTicket = new RockZoneTicket(998, ticketInfo.get(2), 400);
-        VIPTicket JayChouVIPTicket = new VIPTicket(400, 898, ticketInfo.get(2), 400);
-        NormalZoneTicket JayChouNormalZoneTicket = new NormalZoneTicket(800, 798, ticketInfo.get(2), 500);
-        // add to array of each area
-        RockZoneTicket.add(JayChouRockZoneTicket);
-        VIPTicket.add(JayChouVIPTicket);
-        NormalZoneTicket.add(JayChouNormalZoneTicket);
 
         // Start of the program
         boolean flag = true;
@@ -184,19 +171,17 @@ public class Main {
             Staff s = new Staff();
             Boolean exit = false;
 
-            Welcome: while (!exit) {
+            Welcome: while(!exit) {
                 int selection = Welcome(sc);
 
                 if (selection == 1) {
                     Register(selection, sc, person, exit);
-                    if (exit)
-                        continue Welcome;
-                } else if (selection == 2) {
+                    if (exit) continue Welcome;
+                }
+                else if (selection == 2) {
                     Login(selection, sc, person, c, s, exit);
-                    if (exit)
-                        continue Welcome;
-                    else
-                        break Welcome;
+                    if (exit) continue Welcome;
+                    else break Welcome;
                 }
             }
 
