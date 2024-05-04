@@ -6,6 +6,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// lets's add more comments
+
 public class Main {
     private static void print(String s) {
         System.out.print(s);
@@ -15,9 +17,116 @@ public class Main {
         System.out.println(s);
     }
 
+    private static int Welcome(Scanner sc) {
+        println("\nWelcome to Our Ticket System");
+        println("Register or Login?\n");
+        println("1. Register");
+        println("2. Login\n");
+        print("Your selection: ");
+        int selection = sc.nextInt();
+        return selection;
+    }
+
+    private static void Register(int selection, Scanner sc, ArrayList<Person> person, Boolean exit) {
+        println("\nRegister");
+        println("------------");
+        println("Please enter your username and password. (type -1 to exit)");
+        print("Username: ");
+        String username = sc.next();
+        if (username.equals("-1")) {
+            exit = true;
+            return;
+        }
+
+        print("Phone Number: ");
+        String phone = sc.next();
+        if (phone.equals("-1")) {
+            exit = true;
+            return;
+        }
+
+        print("Password: ");
+        String password = sc.next();
+        if (password.equals("-1")) {
+            exit = true;
+            return;
+        }
+
+        double walletBalance = 0;
+
+        Customer newCustomer = new Customer(walletBalance, username, phone, password);
+        person.add(newCustomer);
+        println("Registered Successfully!\n");
+        println("You may login now...");
+    }
+
+    private static void Login(int selection,
+            Scanner sc,
+            ArrayList<Person> person,
+            Customer c,
+            Staff s,
+            Boolean exit) {
+        Boolean loggedIn = false;
+
+        while (!loggedIn) {
+            println("\nLogin");
+            println("---------");
+            println("Please enter your username and password. (type -1 to exit)");
+            print("Username: ");
+            String username = sc.next();
+            if (username == "-1" || username.equals("-1")) {
+                exit = true;
+                return;
+            }
+
+            print("Password: ");
+            String password = sc.next();
+            if (password.equals("-1")) {
+                exit = true;
+                return;
+            }
+
+            for (int i = 0; i < person.size(); i++) {
+                loggedIn = person.get(i).checkUsernameAndPassword(username, password);
+                if (loggedIn) {
+                    println("Login Successfully!");
+                    String customerType = person.get(i) instanceof VIPCustomer ? "VIP Customer"
+                            : person.get(i) instanceof Customer ? "Customer" : "Staff";
+
+                    switch (customerType) {
+                        case "VIP Customer":
+                            println("\nWelcome VIP Customer " + person.get(i).getName());
+                            c = (VIPCustomer) person.get(i);
+                            loggedIn = true;
+                            exit = true;
+                            return;
+                        case "Customer":
+                            println("\nWelcome Customer " + person.get(i).getName());
+                            c = (Customer) person.get(i);
+                            loggedIn = true;
+                            exit = true;
+                            return;
+                        case "Staff":
+                            println("\nWelcome Staff " + person.get(i).getName());
+                            s = (Staff) person.get(i);
+                            loggedIn = true;
+                            exit = true;
+                            return;
+                    }
+                }
+            }
+            println("Login failed! Please try again");
+        }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        ArrayList<Person> person = new ArrayList<Person>();
+        // Some default users
+        person.add(new Customer(10000, "Wong Xiao Hei", "0177784557", "abcd1234"));
+        person.add(new VIPCustomer(15000, "Lee Ai Kun", "0177789557", "iamikun"));
+        person.add(new Staff("Kok", "0199447000", "kok123"));
         // establish ui and initiator
         Initializer init = new Initializer();
         UI ui = new UI();
@@ -27,43 +136,39 @@ public class Main {
 
         // Sample of initiating object
         // Person[] person = init.personInit();
-        Person[] person = new Person[3];
-        person[0] = new Customer(10000, "Wong Xiao Hei", "0177784557", "abcd1234");
-        person[1] = new VIPCustomer(15000, "Lee Ai Kun", "0177789557", "iamikun");
-        person[2] = new Staff("Kok", "0199447000", "kok123");
 
         ArrayList<TicketInfo> ticketInfo = new ArrayList<TicketInfo>();
-        TicketInfo CaiXuKunTicketinfo = new TicketInfo("CaiXuKun", "25 JUN 2023", "Arena of Stars");
-        TicketInfo TwiceTicketinfo = new TicketInfo("Twice", "31 JUL 2023", "Axiata Arena");
-        TicketInfo JayChouTicketinfo = new TicketInfo("Jay Chou", "15 JAN 2023", "Stadium Bukit Jalil");
+        ticketInfo.add(
+                new TicketInfo("CaiXuKun", "25 JUN 2023", "Arena of Stars"));
+        ticketInfo.add(
+                new TicketInfo("Twice", "31 JUL 2023", "Axiata Arena"));
+        ticketInfo.add(
+                new TicketInfo("Jay Chou", "15 JAN 2023", "Stadium Bukit Jalil"));
 
-        ticketInfo.add(CaiXuKunTicketinfo);
-        ticketInfo.add(TwiceTicketinfo);
-        ticketInfo.add(JayChouTicketinfo);
-
-        ArrayList<RockZoneTicket> RockZoneTicket = new ArrayList<RockZoneTicket>();
-        ArrayList<VIPTicket> VIPTicket = new ArrayList<VIPTicket>();
-        ArrayList<NormalZoneTicket> NormalZoneTicket = new ArrayList<NormalZoneTicket>();
+        ArrayList<RockZoneTicket> rockZoneTickets = new ArrayList<RockZoneTicket>();
+        ArrayList<VIPTicket> vipTickets = new ArrayList<VIPTicket>();
+        ArrayList<NormalZoneTicket> normalZoneTickets = new ArrayList<NormalZoneTicket>();
 
         // CaiXuKun Concert
-        RockZoneTicket CaiXuKunRockZoneTicket = new RockZoneTicket(758, ticketInfo.get(0), 200);
-        VIPTicket CaiXuKunVIPTicket = new VIPTicket(200, 658, ticketInfo.get(0), 200);
-        NormalZoneTicket CaiXuKunNormalZoneTicket = new NormalZoneTicket(400, 558, ticketInfo.get(0), 300);
-        // add to array of each area
-        RockZoneTicket.add(CaiXuKunRockZoneTicket);
-        VIPTicket.add(CaiXuKunVIPTicket);
-        NormalZoneTicket.add(CaiXuKunNormalZoneTicket);
+        rockZoneTickets.add(new RockZoneTicket(758, ticketInfo.get(0), 200));
+        vipTickets.add(new VIPTicket(200, 658, ticketInfo.get(0), 200));
+        normalZoneTickets.add(new NormalZoneTicket(400, 558, ticketInfo.get(0), 300));
 
         // Twice Concert
-        RockZoneTicket TwiceRockZoneTicket = new RockZoneTicket(888, ticketInfo.get(1), 300);
-        VIPTicket TwiceVIPTicket = new VIPTicket(300, 788, ticketInfo.get(1), 300);
-        NormalZoneTicket TwiceNormalZoneTicket = new NormalZoneTicket(600, 688, ticketInfo.get(1), 400);
-        // add to array of each area
-        RockZoneTicket.add(TwiceRockZoneTicket);
-        VIPTicket.add(TwiceVIPTicket);
-        NormalZoneTicket.add(TwiceNormalZoneTicket);
+        rockZoneTickets.add(new RockZoneTicket(888, ticketInfo.get(1), 300));
+        vipTickets.add(new VIPTicket(300, 788, ticketInfo.get(1), 300));
+        normalZoneTickets.add(new NormalZoneTicket(600, 688, ticketInfo.get(1), 400));
 
         // JayChou Ticket
+        rockZoneTickets.add(new RockZoneTicket(998, ticketInfo.get(2), 400));
+        vipTickets.add(new VIPTicket(400, 898, ticketInfo.get(2), 400));
+        normalZoneTickets.add(new NormalZoneTicket(800, 798, ticketInfo.get(2), 500));
+
+        // Added a new directoring to store UI, input validation so on.
+        UI ui = new UI();
+
+        // example of calling UI
+        ui.mainMenuDisplay();
         RockZoneTicket JayChouRockZoneTicket = new RockZoneTicket(998, ticketInfo.get(2), 400);
         VIPTicket JayChouVIPTicket = new VIPTicket(400, 898, ticketInfo.get(2), 400);
         NormalZoneTicket JayChouNormalZoneTicket = new NormalZoneTicket(800, 798, ticketInfo.get(2), 500);
@@ -74,41 +179,25 @@ public class Main {
 
         // Start of the program
         boolean flag = true;
-        while (flag) {
-            println("\nWelcome to Our Ticket System");
-
+        MainLoop: while (flag) {
             Customer c = new Customer();
             Staff s = new Staff();
-            int logInStatus = 0;
+            Boolean exit = false;
 
-            LogInLoop: while (logInStatus != 1) {
-                println("Please enter your username and password.");
-                print("Username: ");
-                String username = sc.nextLine();
+            Welcome: while (!exit) {
+                int selection = Welcome(sc);
 
-                print("Password: ");
-                String password = sc.nextLine();
-
-                for (int i = 0; i < person.length; i++) {
-                    logInStatus = person[i].checkUsernameAndPassword(username, password);
-                    if (logInStatus == 1) {
-                        println("Login Successfully!");
-                        if (person[i] instanceof VIPCustomer) {
-                            println("\nWelcome VIP Customer " + person[i].getName());
-                            c = (VIPCustomer) person[i];
-                        } else if (person[i] instanceof Customer) {
-                            println("\nWelcome Customer" + person[i].getName());
-                            c = (Customer) person[i];
-                        } else {
-                            println("\nWelcome Staff " + person[i].getName());
-                            s = (Staff) person[i];
-                        }
-
-                        break LogInLoop;
-                    }
+                if (selection == 1) {
+                    Register(selection, sc, person, exit);
+                    if (exit)
+                        continue Welcome;
+                } else if (selection == 2) {
+                    Login(selection, sc, person, c, s, exit);
+                    if (exit)
+                        continue Welcome;
+                    else
+                        break Welcome;
                 }
-                println("Login Failed! \nPls try again.");
-
             }
 
             // if staff login
@@ -142,7 +231,7 @@ public class Main {
                     int availableTicket = sc.nextInt();
                     RockZoneTicket r = new RockZoneTicket(price, ticketInfo.get(ticketInfo.size() - 1),
                             availableTicket);
-                    RockZoneTicket.add(r);
+                    rockZoneTickets.add(r);
 
                     println("\nEnter details of VIP Zone Ticket");
                     println("Price: ");
@@ -152,7 +241,7 @@ public class Main {
                     println("Seat No: ");
                     int seatNo = sc.nextInt();
                     VIPTicket v = new VIPTicket(seatNo, price, ticketInfo.get(ticketInfo.size() - 1), availableTicket);
-                    VIPTicket.add(v);
+                    vipTickets.add(v);
 
                     println("\nEnter details of Normal Zone Ticket");
                     println("Price: ");
@@ -163,12 +252,23 @@ public class Main {
                     seatNo = sc.nextInt();
                     NormalZoneTicket n = new NormalZoneTicket(seatNo, price, ticketInfo.get(ticketInfo.size() - 1),
                             availableTicket);
-                    NormalZoneTicket.add(n);
+                    normalZoneTickets.add(n);
                 }
             }
 
             // if user login
             else {
+                if (c.getWalletBalance() == 0) {
+                    print("We noticed that you have not top up your wallet yet. Do you want to top up now? (Y/N)");
+                    char topUp = sc.next().charAt(0);
+                    if (topUp == 'Y' || topUp == 'y') {
+                        print("Enter amount to top up: ");
+                        double amount = sc.nextDouble();
+                        c.setWalletBalance(amount);
+                        println("Top up successful! Your current wallet balance is: " + c.getWalletBalance());
+                    }
+                }
+
                 // Display Concert Event
                 // Prompt user to select concert they willing to go
                 println("\nPlease Select Your Ticket");
@@ -190,9 +290,9 @@ public class Main {
                 Payment payment = new Payment();
                 while (contBuyTicket == 'Y') {
                     // Prompt User select area
-                    println(RockZoneTicket.get(optionConcert).toString());
-                    println(VIPTicket.get(optionConcert).toString());
-                    println(NormalZoneTicket.get(optionConcert).toString());
+                    println(rockZoneTickets.get(optionConcert).toString());
+                    println(vipTickets.get(optionConcert).toString());
+                    println(normalZoneTickets.get(optionConcert).toString());
                     println("Your selection area: ");
                     int optionArea = sc.nextInt();
 
@@ -201,14 +301,14 @@ public class Main {
                     int quantity = sc.nextInt();
 
                     if (optionArea == 1) {
-                        RockZoneTicket.get(optionConcert).setQuantity(quantity);
-                        payment.calculatePayment(c, RockZoneTicket.get(optionConcert));
+                        rockZoneTickets.get(optionConcert).setQuantity(quantity);
+                        payment.calculatePayment(c, rockZoneTickets.get(optionConcert));
                     } else if (optionArea == 2) {
-                        VIPTicket.get(optionConcert).setQuantity(quantity);
-                        payment.calculatePayment(c, VIPTicket.get(optionConcert));
+                        vipTickets.get(optionConcert).setQuantity(quantity);
+                        payment.calculatePayment(c, vipTickets.get(optionConcert));
                     } else if (optionArea == 3) {
-                        NormalZoneTicket.get(optionConcert).setQuantity(quantity);
-                        payment.calculatePayment(c, NormalZoneTicket.get(optionConcert));
+                        normalZoneTickets.get(optionConcert).setQuantity(quantity);
+                        payment.calculatePayment(c, normalZoneTickets.get(optionConcert));
                     }
 
                     println("Total payment: " + payment.getTotalPayment());
@@ -235,9 +335,9 @@ public class Main {
                         payment.deductWalletBalance(c);
                         payment.displayPaymentBill(c);
                         // Print Ticket
-                        RockZoneTicket.get(optionConcert).DisplayTicket(optionConcert);
-                        VIPTicket.get(optionConcert).DisplayTicket(optionConcert);
-                        NormalZoneTicket.get(optionConcert).DisplayTicket(optionConcert);
+                        rockZoneTickets.get(optionConcert).DisplayTicket(optionConcert);
+                        vipTickets.get(optionConcert).DisplayTicket(optionConcert);
+                        normalZoneTickets.get(optionConcert).DisplayTicket(optionConcert);
                     }
                 } else {
                     println("Return to Home Page....");
