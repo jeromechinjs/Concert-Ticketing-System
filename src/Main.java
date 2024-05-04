@@ -98,16 +98,19 @@ public class Main {
                             println("\nWelcome VIP Customer " + person.get(i).getName());
                             c = (VIPCustomer) person.get(i);
                             loggedIn = true;
+                            exit = true;
                         return;
                         case "Customer":
                             println("\nWelcome Customer " + person.get(i).getName());
                             c = (Customer) person.get(i);
                             loggedIn = true;
+                            exit = true; 
                         return;
                         case "Staff":
                             println("\nWelcome Staff " + person.get(i).getName());
                             s = (Staff) person.get(i);
                             loggedIn = true;
+                            exit = true;
                         return;
                     }
                 }
@@ -166,7 +169,7 @@ public class Main {
         MainLoop: while (flag) {
             Customer c = new Customer();
             Staff s = new Staff();
-            Boolean loggedIn = false, exit = false;
+            Boolean exit = false;
 
             Welcome: while(!exit) {
                 int selection = Welcome(sc);
@@ -178,6 +181,7 @@ public class Main {
                 else if (selection == 2) {
                     Login(selection, sc, person, c, s, exit);
                     if (exit) continue Welcome;
+                    else break Welcome;
                 }
             }
 
@@ -212,7 +216,7 @@ public class Main {
                     int availableTicket = sc.nextInt();
                     RockZoneTicket r = new RockZoneTicket(price, ticketInfo.get(ticketInfo.size() - 1),
                             availableTicket);
-                    RockZoneTicket.add(r);
+                    rockZoneTickets.add(r);
 
                     println("\nEnter details of VIP Zone Ticket");
                     println("Price: ");
@@ -222,7 +226,7 @@ public class Main {
                     println("Seat No: ");
                     int seatNo = sc.nextInt();
                     VIPTicket v = new VIPTicket(seatNo, price, ticketInfo.get(ticketInfo.size() - 1), availableTicket);
-                    VIPTicket.add(v);
+                    vipTickets.add(v);
 
                     println("\nEnter details of Normal Zone Ticket");
                     println("Price: ");
@@ -233,7 +237,7 @@ public class Main {
                     seatNo = sc.nextInt();
                     NormalZoneTicket n = new NormalZoneTicket(seatNo, price, ticketInfo.get(ticketInfo.size() - 1),
                             availableTicket);
-                    NormalZoneTicket.add(n);
+                    normalZoneTickets.add(n);
                 }
             }
 
@@ -271,9 +275,9 @@ public class Main {
                 Payment payment = new Payment();
                 while (contBuyTicket == 'Y') {
                     // Prompt User select area
-                    println(RockZoneTicket.get(optionConcert).toString());
-                    println(VIPTicket.get(optionConcert).toString());
-                    println(NormalZoneTicket.get(optionConcert).toString());
+                    println(rockZoneTickets.get(optionConcert).toString());
+                    println(vipTickets.get(optionConcert).toString());
+                    println(normalZoneTickets.get(optionConcert).toString());
                     println("Your selection area: ");
                     int optionArea = sc.nextInt();
 
@@ -282,14 +286,14 @@ public class Main {
                     int quantity = sc.nextInt();
 
                     if (optionArea == 1) {
-                        RockZoneTicket.get(optionConcert).setQuantity(quantity);
-                        payment.calculatePayment(c, RockZoneTicket.get(optionConcert));
+                        rockZoneTickets.get(optionConcert).setQuantity(quantity);
+                        payment.calculatePayment(c, rockZoneTickets.get(optionConcert));
                     } else if (optionArea == 2) {
-                        VIPTicket.get(optionConcert).setQuantity(quantity);
-                        payment.calculatePayment(c, VIPTicket.get(optionConcert));
+                        vipTickets.get(optionConcert).setQuantity(quantity);
+                        payment.calculatePayment(c, vipTickets.get(optionConcert));
                     } else if (optionArea == 3) {
-                        NormalZoneTicket.get(optionConcert).setQuantity(quantity);
-                        payment.calculatePayment(c, NormalZoneTicket.get(optionConcert));
+                        normalZoneTickets.get(optionConcert).setQuantity(quantity);
+                        payment.calculatePayment(c, normalZoneTickets.get(optionConcert));
                     }
 
                     println("Total payment: " + payment.getTotalPayment());
@@ -316,9 +320,9 @@ public class Main {
                         payment.deductWalletBalance(c);
                         payment.displayPaymentBill(c);
                         // Print Ticket
-                        RockZoneTicket.get(optionConcert).DisplayTicket(optionConcert);
-                        VIPTicket.get(optionConcert).DisplayTicket(optionConcert);
-                        NormalZoneTicket.get(optionConcert).DisplayTicket(optionConcert);
+                        rockZoneTickets.get(optionConcert).DisplayTicket(optionConcert);
+                        vipTickets.get(optionConcert).DisplayTicket(optionConcert);
+                        normalZoneTickets.get(optionConcert).DisplayTicket(optionConcert);
                     }
                 } else {
                     println("Return to Home Page....");
