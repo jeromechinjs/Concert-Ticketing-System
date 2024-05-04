@@ -1,3 +1,5 @@
+
+package model;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -8,6 +10,9 @@
  */
 public class NormalZoneTicket extends Ticket{
     private int seatNo ;
+    private int price;
+    private TicketInfo ticketInfo;
+    private int quantity;
 
     public NormalZoneTicket(int seatNo) {
         this.seatNo = seatNo;
@@ -18,8 +23,13 @@ public class NormalZoneTicket extends Ticket{
         this.seatNo = seatNo;
         setDistFromStage("Far");
     }
+    public NormalZoneTicket(int price, TicketInfo ticketInfo, int quantity) {
+        this.price = price;
+        this.ticketInfo = ticketInfo;
+        this.quantity = quantity;
+    }
 
-
+        // Other methods and fields of the NormalZoneTicket class
     @Override
     public String toString() {
         return "3. --- Normal Zone Area(Sitting Zone) ---"
@@ -43,5 +53,5 @@ public class NormalZoneTicket extends Ticket{
             }
         }
     }
-    
 }
+

@@ -1,10 +1,19 @@
+package util;
 //import java.lang.reflect.Array;
 
 import java.util.ArrayList;
+import model.Person;
+import model.Customer;
+import model.VIPCustomer;
+import model.Staff;
+import model.TicketInfo;
+import model.RockZoneTicket;
+import model.VIPTicket;
+import model.NormalZoneTicket;
 
 public class Initializer {
     // declare initial value here, summon at main
-
+    
     public ArrayList<Person> personInit() {
         ArrayList<Person> person = new ArrayList<Person>();
 

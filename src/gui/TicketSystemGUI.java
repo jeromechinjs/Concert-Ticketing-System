@@ -1,7 +1,9 @@
+package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import model.*;
+import util.Initializer;
 
 public class TicketSystemGUI extends JFrame {
     private CardLayout cardLayout;
@@ -35,10 +37,11 @@ public class TicketSystemGUI extends JFrame {
         cardLayout = (CardLayout) (cards.getLayout());
         
         // Instantiate the panels with necessary data
+        Customer customer = new Customer(); // Replace with your actual customer object
         loginPanel = new LoginPanel(persons);
         registrationPanel = new RegistrationPanel(persons);
         ticketSelectionPanel = new TicketSelectionPanel(ticketInfos, rockTickets, vipTickets, normalTickets);
-        paymentPanel = new PaymentPanel();
+        paymentPanel = new PaymentPanel(customer);
         detailedTicketManagementPanel = new DetailedTicketManagementPanel(ticketInfos, rockTickets, vipTickets, normalTickets);
         userManagementPanel = new UserManagementPanel(persons); // Assumes this panel is created for managing users
 

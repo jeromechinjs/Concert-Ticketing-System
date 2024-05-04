@@ -1,6 +1,5 @@
 import gui.TicketSystemGUI;
 import util.Initializer;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {

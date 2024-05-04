@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\gui",
+    "\\src\\model",
+    "\\src\\util"
   ],
-  "SelectedNode": "\\C:\\Users\\Ryan\\Source\\Repos\\Concert-Ticketing-System",
+  "SelectedNode": "\\src\\gui\\UI.java",
   "PreviewInSolutionExplorer": false
 }

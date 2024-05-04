@@ -1,3 +1,4 @@
+package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ class UserManagementPanel extends JPanel {
             Person newUser = new Person(name, phone, password);  // Assuming Person can be directly instantiated
             persons.add(newUser);
             modelUsers.addElement(newUser);
+            
         }
     }
 
