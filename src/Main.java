@@ -126,44 +126,34 @@ public class Main {
         person.add(new Staff("Kok", "0199447000", "kok123"));
 
         ArrayList<TicketInfo> ticketInfo = new ArrayList<TicketInfo>();
-        TicketInfo CaiXuKunTicketinfo = new TicketInfo("CaiXuKun", "25 JUN 2023", "Arena of Stars");
-        TicketInfo TwiceTicketinfo = new TicketInfo("Twice", "31 JUL 2023", "Axiata Arena");
-        TicketInfo JayChouTicketinfo = new TicketInfo("Jay Chou", "15 JAN 2023", "Stadium Bukit Jalil");
+        ticketInfo.add(
+            new TicketInfo("CaiXuKun", "25 JUN 2023", "Arena of Stars")
+        );
+        ticketInfo.add(
+            new TicketInfo("Twice", "31 JUL 2023", "Axiata Arena")
+        );
+        ticketInfo.add(
+            new TicketInfo("Jay Chou", "15 JAN 2023", "Stadium Bukit Jalil")
+        );
 
-        ticketInfo.add(CaiXuKunTicketinfo);
-        ticketInfo.add(TwiceTicketinfo);
-        ticketInfo.add(JayChouTicketinfo);
-
-        ArrayList<RockZoneTicket> RockZoneTicket = new ArrayList<RockZoneTicket>();
-        ArrayList<VIPTicket> VIPTicket = new ArrayList<VIPTicket>();
-        ArrayList<NormalZoneTicket> NormalZoneTicket = new ArrayList<NormalZoneTicket>();
+        ArrayList<RockZoneTicket> rockZoneTickets = new ArrayList<RockZoneTicket>();
+        ArrayList<VIPTicket> vipTickets = new ArrayList<VIPTicket>();
+        ArrayList<NormalZoneTicket> normalZoneTickets = new ArrayList<NormalZoneTicket>();
 
         // CaiXuKun Concert
-        RockZoneTicket CaiXuKunRockZoneTicket = new RockZoneTicket(758, ticketInfo.get(0), 200);
-        VIPTicket CaiXuKunVIPTicket = new VIPTicket(200, 658, ticketInfo.get(0), 200);
-        NormalZoneTicket CaiXuKunNormalZoneTicket = new NormalZoneTicket(400, 558, ticketInfo.get(0), 300);
-        // add to array of each area
-        RockZoneTicket.add(CaiXuKunRockZoneTicket);
-        VIPTicket.add(CaiXuKunVIPTicket);
-        NormalZoneTicket.add(CaiXuKunNormalZoneTicket);
+        rockZoneTickets.add(new RockZoneTicket(758, ticketInfo.get(0), 200));
+        vipTickets.add(new VIPTicket(200, 658, ticketInfo.get(0), 200));
+        normalZoneTickets.add(new NormalZoneTicket(400, 558, ticketInfo.get(0), 300));
 
         // Twice Concert
-        RockZoneTicket TwiceRockZoneTicket = new RockZoneTicket(888, ticketInfo.get(1), 300);
-        VIPTicket TwiceVIPTicket = new VIPTicket(300, 788, ticketInfo.get(1), 300);
-        NormalZoneTicket TwiceNormalZoneTicket = new NormalZoneTicket(600, 688, ticketInfo.get(1), 400);
-        // add to array of each area
-        RockZoneTicket.add(TwiceRockZoneTicket);
-        VIPTicket.add(TwiceVIPTicket);
-        NormalZoneTicket.add(TwiceNormalZoneTicket);
+        rockZoneTickets.add(new RockZoneTicket(888, ticketInfo.get(1), 300));
+        vipTickets.add(new VIPTicket(300, 788, ticketInfo.get(1), 300));
+        normalZoneTickets.add(new NormalZoneTicket(600, 688, ticketInfo.get(1), 400));
 
         // JayChou Ticket
-        RockZoneTicket JayChouRockZoneTicket = new RockZoneTicket(998, ticketInfo.get(2), 400);
-        VIPTicket JayChouVIPTicket = new VIPTicket(400, 898, ticketInfo.get(2), 400);
-        NormalZoneTicket JayChouNormalZoneTicket = new NormalZoneTicket(800, 798, ticketInfo.get(2), 500);
-        // add to array of each area
-        RockZoneTicket.add(JayChouRockZoneTicket);
-        VIPTicket.add(JayChouVIPTicket);
-        NormalZoneTicket.add(JayChouNormalZoneTicket);
+        rockZoneTickets.add(new RockZoneTicket(998, ticketInfo.get(2), 400));
+        vipTickets.add(new VIPTicket(400, 898, ticketInfo.get(2), 400));
+        normalZoneTickets.add(new NormalZoneTicket(800, 798, ticketInfo.get(2), 500));
 
         // Added a new directoring to store UI, input validation so on.
         UI ui = new UI();
