@@ -21,12 +21,32 @@ public class PaymentPanel extends JPanel {
     }
 
     private void processPayment() {
+        // Update the PaymentCompletionPanel with the calculated change
+        PaymentCompletionPanel completionPanel = findPaymentCompletionPanel();
         double amountPaid = parseAmount(txtAmountPaid.getText());
         double change = amountPaid - totalCost;
 
-        // Update the PaymentCompletionPanel with the calculated change
-        PaymentCompletionPanel completionPanel = findPaymentCompletionPanel();
+
         if (completionPanel != null) {
+            // validation
+
+             // if text field is empty
+            if (txtAmountPaid.getText() == null) {
+                System.err.println("Kindly enter the amount to pay.");
+            } 
+
+             // Make sure correct data type (double) is entered only
+            try {  // try parsing a double value (throws error if couldn't be parsed, indicating invalid data type)
+                Double.parseDouble(txtAmountPaid.getText());
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input. Kindly enter the correct data type.");
+            }
+
+            // check if payment is correct amount
+            if (amountPaid < totalCost) {
+                System.err.println("Insufficient amount. Please try again");
+            }
+            
             completionPanel.setChange(change);
             ((CardLayout) getParent().getLayout()).show(getParent(), "PaymentCompletion");
         } else {
