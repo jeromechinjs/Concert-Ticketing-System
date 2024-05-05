@@ -66,5 +66,8 @@ class TicketSelectionPanel extends JPanel {
         // Example of checkout functionality
         JOptionPane.showMessageDialog(this, "Proceeding to checkout...");
         // Transition to a payment panel or confirmation screen would occur here
+
+        // Trigger panel switch to the payment panel or confirmation screen
+    ((TicketSystemGUI) SwingUtilities.getWindowAncestor(this)).switchTo("Payment");
     }
 }
