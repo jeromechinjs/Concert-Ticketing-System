@@ -1,41 +1,55 @@
 package gui;
+
 import javax.swing.*;
 import java.awt.*;
-import model.Customer;
 
-class PaymentPanel extends JPanel {
-    private JTextField txtAmount, txtCardNumber;
-    private JButton btnPay, btnBack;
-    private Customer customer;  // Assuming customer details are needed for payment processing
+public class PaymentPanel extends JPanel {
+    private JTextField txtAmountPaid;
+    private JButton btnSubmitPayment;
+    private double totalCost = 100.00; // This should be dynamically calculated based on the tickets
 
-    public PaymentPanel(Customer customer) {
-        this.customer = customer;
-        setLayout(new GridLayout(3, 2, 5, 5));
+    public PaymentPanel() {
+        setLayout(new GridLayout(2, 2));
+        add(new JLabel("Total Cost: $" + totalCost));
+        txtAmountPaid = new JTextField();
+        add(new JLabel("Amount Paid:"));
+        add(txtAmountPaid);
 
-        add(new JLabel("Amount:"));
-        txtAmount = new JTextField();
-        add(txtAmount);
-
-        add(new JLabel("Card Number:"));
-        txtCardNumber = new JTextField();
-        add(txtCardNumber);
-
-        btnPay = new JButton("Pay Now");
-        btnPay.addActionListener(e -> processPayment());
-        add(btnPay);
-
-        btnBack = new JButton("Back");
-        btnBack.addActionListener(e -> switchToPreviousPanel());
-        add(btnBack);
+        btnSubmitPayment = new JButton("Submit Payment");
+        btnSubmitPayment.addActionListener(e -> processPayment());
+        add(btnSubmitPayment);
     }
 
     private void processPayment() {
-        // Process payment here
-        JOptionPane.showMessageDialog(this, "Payment processed successfully!");
+        double amountPaid = parseAmount(txtAmountPaid.getText());
+        double change = amountPaid - totalCost;
+
+        // Update the PaymentCompletionPanel with the calculated change
+        PaymentCompletionPanel completionPanel = findPaymentCompletionPanel();
+        if (completionPanel != null) {
+            completionPanel.setChange(change);
+            ((CardLayout) getParent().getLayout()).show(getParent(), "PaymentCompletion");
+        } else {
+            System.err.println("PaymentCompletionPanel not found.");
+        }
     }
 
-    private void switchToPreviousPanel() {
-        CardLayout cardLayout = (CardLayout) getParent().getLayout();
-        cardLayout.previous(getParent());
+    private double parseAmount(String text) {
+        try {
+            return Double.parseDouble(text);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid amount format.", "Error", JOptionPane.ERROR_MESSAGE);
+            return 0;  // Return 0 or handle this scenario appropriately
+        }
+    }
+
+    private PaymentCompletionPanel findPaymentCompletionPanel() {
+        // Assuming the PaymentCompletionPanel is added to the parent container which uses CardLayout
+        for (Component comp : getParent().getComponents()) {
+            if (comp instanceof PaymentCompletionPanel) {
+                return (PaymentCompletionPanel) comp;
+            }
+        }
+        return null;
     }
 }

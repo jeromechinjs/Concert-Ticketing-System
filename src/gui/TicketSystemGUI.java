@@ -1,9 +1,11 @@
 package gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import model.*;
 import util.Initializer;
+import java.awt.event.ActionEvent;
 
 public class TicketSystemGUI extends JFrame {
     private CardLayout cardLayout;
@@ -14,6 +16,7 @@ public class TicketSystemGUI extends JFrame {
     private PaymentPanel paymentPanel;
     private DetailedTicketManagementPanel detailedTicketManagementPanel;
     private UserManagementPanel userManagementPanel;  // Assuming this panel is implemented similarly
+    private PaymentCompletionPanel paymentCompletionPanel;
 
     public TicketSystemGUI() {
         super("Ticket System");
@@ -37,26 +40,34 @@ public class TicketSystemGUI extends JFrame {
         cardLayout = (CardLayout) (cards.getLayout());
         
         // Instantiate the panels with necessary data
-        Customer customer = new Customer(); // Replace with your actual customer object
         loginPanel = new LoginPanel(persons);
         registrationPanel = new RegistrationPanel(persons);
         ticketSelectionPanel = new TicketSelectionPanel(ticketInfos, rockTickets, vipTickets, normalTickets);
-        paymentPanel = new PaymentPanel(customer);
+        paymentPanel = new PaymentPanel(); // Modify constructor as needed to pass data
         detailedTicketManagementPanel = new DetailedTicketManagementPanel(ticketInfos, rockTickets, vipTickets, normalTickets);
         userManagementPanel = new UserManagementPanel(persons); // Assumes this panel is created for managing users
+        paymentCompletionPanel = new PaymentCompletionPanel(this::handleBuyMoreTickets, this::handleLogout);
 
         // Add panels to CardLayout
         cards.add(loginPanel, "Login");
         cards.add(registrationPanel, "Register");
-        cards.add(paymentPanel, "Payment");
-        cards.add(userManagementPanel, "User Management");
         cards.add(ticketSelectionPanel, "Ticket Selection");
+        cards.add(paymentPanel, "Payment");
         cards.add(detailedTicketManagementPanel, "Manage Tickets");
-// Ensure these names match exactly what's used in the login panel transition logic.
+        cards.add(userManagementPanel, "User Management");
+        cards.add(paymentCompletionPanel, "PaymentCompletion");
 
         // Add the card panel to the JFrame
         getContentPane().add(cards);
         cardLayout.show(cards, "Login"); // Start with the Login panel
+    }
+
+    private void handleBuyMoreTickets(ActionEvent e) {
+        cardLayout.show(cards, "Ticket Selection");
+    }
+
+    private void handleLogout(ActionEvent e) {
+        cardLayout.show(cards, "Login");
     }
 
     public void switchTo(String card) {
