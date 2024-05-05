@@ -50,11 +50,11 @@ class DetailedTicketManagementPanel extends JPanel {
         formPanel.add(btnAddTicket);
 
         btnUpdateTicket = new JButton("Update Ticket");
-        // Implementation needed for update functionality
+        btnUpdateTicket.addActionListener(e -> updateTicket());
         formPanel.add(btnUpdateTicket);
 
         btnDeleteTicket = new JButton("Delete Ticket");
-        // Implementation needed for delete functionality
+        btnDeleteTicket.addActionListener(e -> deleteTicket());
         formPanel.add(btnDeleteTicket);
 
         add(formPanel, BorderLayout.SOUTH);
@@ -88,4 +88,38 @@ class DetailedTicketManagementPanel extends JPanel {
         updateTicketList(rockZoneTickets, vipTickets, normalZoneTickets);
         JOptionPane.showMessageDialog(this, "Ticket added successfully!");
     }
+
+    private void updateTicket() {
+        // Get the selected ticket from the list
+        String selectedTicket = listTickets.getSelectedValue();
+        if (selectedTicket != null) {
+            // Implement the logic to update the ticket details
+            // For example:
+            String newArtist = txtArtist.getText();
+            String newDate = txtDate.getText();
+            String newVenue = txtVenue.getText();
+            String newPrice = txtPrice.getText();
+            String newQuantity = txtQuantity.getText();
+    
+            // Update the ticket details in the list
+            modelTickets.set(listTickets.getSelectedIndex(), selectedTicket);
+            // Notify the user about the update
+            JOptionPane.showMessageDialog(this, "Ticket updated successfully!");
+        } else {
+            JOptionPane.showMessageDialog(this, "No ticket selected!");
+        }
+    }
+
+    private void deleteTicket() {
+        int selectedIndex = listTickets.getSelectedIndex();
+        if (selectedIndex != -1) {
+            // Remove the selected ticket from the list
+            modelTickets.remove(selectedIndex);
+            // Notify the user about the deletion
+            JOptionPane.showMessageDialog(this, "Ticket deleted successfully!");
+        } else {
+            JOptionPane.showMessageDialog(this, "No ticket selected!");
+        }
+    }
+
 }
