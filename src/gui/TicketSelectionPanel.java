@@ -88,7 +88,8 @@ class TicketSelectionPanel extends JPanel {
     }
 
     private void proceedToCheckout() {
-        System.out.println("Proceeding to checkout..."); // Debug print
-        ((CardLayout) getParent().getLayout()).show(getParent(), "Payment");
+        // Example of checkout functionality
+        JOptionPane.showMessageDialog(this, "Proceeding to checkout...");
+        // Transition to a payment panel or confirmation screen would occur here
     }
 }

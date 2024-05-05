@@ -1,21 +1,19 @@
 package model;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+import java.util.Scanner;
 
 /**
- *
+ * Represents a payment made by a customer for a ticket.
+ * 
  * @author User
  */
 public class Payment {
     private double amount;
-    private Customer customer; 
+    private Customer customer;
     private double totalPayment;
     private Ticket ticket;
-    
-    
+
+    // Getters and setters
     public double getAmount() {
         return amount;
     }
@@ -47,37 +45,60 @@ public class Payment {
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }
-    
-    public void calculatePayment(Customer c, Ticket t){
-        double discountRate;
-        if (c instanceof VIPCustomer) {
-            discountRate = ((VIPCustomer) c).getDiscountRate();
+
+    /**
+     * Calculates the payment amount based on the ticket price, quantity, and customer discount rate.
+     * 
+     * @param customer the customer making the payment
+     * @param ticket the ticket being purchased
+     * @throws IllegalArgumentException if the customer or ticket is null
+     */
+    public void calculatePayment(Customer customer, Ticket ticket) {
+        if (customer == null || ticket == null) {
+            throw new IllegalArgumentException("Customer and ticket cannot be null.");
         }
-        else{
-            discountRate = 100.0;
+        double discountRate = getDiscountRate(customer);
+        if (discountRate < 0.0) {
+            throw new IllegalArgumentException("Discount rate cannot be negative.");
         }
-        amount = t.getPrice()*t.getQuantity()*discountRate;
+        if (ticket.getPrice() < 0.0 || ticket.getQuantity() < 0) {
+            throw new IllegalArgumentException("Ticket price and quantity cannot be negative.");
+        }
+        amount = ticket.getPrice() * ticket.getQuantity() * discountRate;
         totalPayment += amount;
-        t.setAvailableTicket(t.getAvailableTicket()-t.getQuantity());
-        t.setTotalQuantity(t.getTotalQuantity()+t.getQuantity());
+        if (ticket.getAvailableTicket() < 0.0 || ticket.getTotalQuantity() < 0) {
+            throw new IllegalArgumentException("Ticket availability and total quantity cannot be negative.");
+        }
+        ticket.setAvailableTicket(ticket.getAvailableTicket() - ticket.getQuantity());
+        ticket.setTotalQuantity(ticket.getTotalQuantity() + ticket.getQuantity());
     }
-    
-    
-    public void deductWalletBalance(Customer c){
-        c.setWalletBalance(c.getWalletBalance()- totalPayment);
+
+    /**
+     * Gets the discount rate for the given customer.
+     * 
+     * @param customer the customer
+     * @return the discount rate (100.0 for non-VIP customers)
+     */
+    private double getDiscountRate(Customer customer) {
+        return customer instanceof VIPCustomer? ((VIPCustomer) customer).getDiscountRate() : 100.0;
     }
-    
-    public void displayPaymentBill(Customer c){
-        
-        System.out.println("-------------------------");
-        System.out.println("       Payment Bill       ");
-        System.out.println("-------------------------");
-        System.out.println("Status: Successfull");
-        System.out.println("Total Amount: " +totalPayment);
-        System.out.println("Wallet Balance: "+ c.getWalletBalance());
-        System.out.println("Buyer Name: "+ c.getName());
-        System.out.println("Phone no: "+ c.getPhoneNo());
-        System.out.println("-------------------------");
+
+    /**
+     * Deducts the payment amount from the customer's wallet balance.
+     * 
+     * @param customer the customer
+     * @throws IllegalArgumentException if the customer is null
+     */
+    public void deductWalletBalance(Customer customer) {
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer cannot be null.");
+        }
+        Scanner scanner = new Scanner(System.in);
+        while (customer.getWalletBalance() < totalPayment) {
+            System.out.println("Customer wallet balance is insufficient. Please re-enter the wallet balance:");
+            customer.setWalletBalance(scanner.nextDouble());
+        }
+        customer.setWalletBalance(customer.getWalletBalance() - totalPayment);
     }
-    
+
 }
