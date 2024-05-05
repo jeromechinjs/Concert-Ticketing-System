@@ -56,6 +56,7 @@ public class TicketSystemGUI extends JFrame {
         cards.add(detailedTicketManagementPanel, "Manage Tickets");
         cards.add(userManagementPanel, "User Management");
         cards.add(paymentCompletionPanel, "PaymentCompletion");
+        
 
         // Add the card panel to the JFrame
         getContentPane().add(cards);
