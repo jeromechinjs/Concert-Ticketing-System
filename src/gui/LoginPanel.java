@@ -39,6 +39,8 @@ class LoginPanel extends JPanel {
             if (person.checkUsernameAndPassword(username, password)) {
                 JOptionPane.showMessageDialog(this, "Login Successful!");
                 found = true;
+                // Switch to the next panel after successful login
+            ((TicketSystemGUI) SwingUtilities.getWindowAncestor(this)).switchTo("Ticket Selection");
                 break;
             }
         }
