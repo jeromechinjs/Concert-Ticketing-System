@@ -1,11 +1,9 @@
 package gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import model.TicketInfo;
-import model.RockZoneTicket;
-import model.VIPTicket;
-import model.NormalZoneTicket;
+import model.*;
 
 class TicketSelectionPanel extends JPanel {
     private JComboBox<TicketInfo> comboConcerts;
@@ -26,45 +24,71 @@ class TicketSelectionPanel extends JPanel {
         this.vipTickets = vipTickets;
         this.normalZoneTickets = normalZoneTickets;
         
-        setLayout(new GridLayout(5, 2, 10, 10));  // Using GridLayout for simplicity
+        setLayout(new BorderLayout());
+        initUIComponents();
+    }
+
+    private void initUIComponents() {
+        JPanel formPanel = new JPanel(new GridLayout(5, 2, 10, 10));  // Using GridLayout for form elements
 
         comboConcerts = new JComboBox<>(ticketInfos.toArray(new TicketInfo[0]));
-        add(new JLabel("Select Concert:"));
-        add(comboConcerts);
+        formPanel.add(new JLabel("Select Concert:"));
+        formPanel.add(comboConcerts);
 
         comboTicketType = new JComboBox<>(new String[]{"Rock", "VIP", "Normal"});
-        add(new JLabel("Select Ticket Type:"));
-        add(comboTicketType);
+        formPanel.add(new JLabel("Select Ticket Type:"));
+        formPanel.add(comboTicketType);
 
         txtQuantity = new JTextField();
-        add(new JLabel("Quantity:"));
-        add(txtQuantity);
+        formPanel.add(new JLabel("Quantity:"));
+        formPanel.add(txtQuantity);
 
         btnAddToCart = new JButton("Add to Cart");
         btnAddToCart.addActionListener(e -> addToCart());
-        add(btnAddToCart);
+        formPanel.add(btnAddToCart);
 
         btnCheckout = new JButton("Checkout");
         btnCheckout.addActionListener(e -> proceedToCheckout());
-        add(btnCheckout);
+        formPanel.add(btnCheckout);
+
+        add(formPanel, BorderLayout.CENTER);
     }
 
     private void addToCart() {
-        // Example of adding to cart functionality, assuming cart management is handled elsewhere
-        String selectedConcert = comboConcerts.getSelectedItem().toString();
-        String ticketType = comboTicketType.getSelectedItem().toString();
-        int quantity;
         try {
-            quantity = Integer.parseInt(txtQuantity.getText());
-            JOptionPane.showMessageDialog(this, "Added " + quantity + " " + ticketType + " tickets for " + selectedConcert + " to cart.");
+            TicketInfo selectedConcert = (TicketInfo) comboConcerts.getSelectedItem();
+            String ticketType = (String) comboTicketType.getSelectedItem();
+            int quantity = Integer.parseInt(txtQuantity.getText());
+
+            switch (ticketType) {
+                case "Rock":
+                    updateTicketList(rockZoneTickets, selectedConcert, quantity);
+                    break;
+                case "VIP":
+                    updateTicketList(vipTickets, selectedConcert, quantity);
+                    break;
+                case "Normal":
+                    updateTicketList(normalZoneTickets, selectedConcert, quantity);
+                    break;
+            }
+
+            JOptionPane.showMessageDialog(this, "Added " + quantity + " " + ticketType + " tickets for " + selectedConcert.getArtist() + " to cart.");
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please enter a valid quantity.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
+    private void updateTicketList(ArrayList<? extends Ticket> tickets, TicketInfo concert, int quantity) {
+        for (Ticket ticket : tickets) {
+            if (ticket.getTicketInfo().equals(concert)) {
+                // Here you would actually adjust ticket quantities, check availability, etc.
+                break;
+            }
+        }
+    }
+
     private void proceedToCheckout() {
-        // Example of checkout functionality
-        JOptionPane.showMessageDialog(this, "Proceeding to checkout...");
-        // Transition to a payment panel or confirmation screen would occur here
+        System.out.println("Proceeding to checkout..."); // Debug print
+        ((CardLayout) getParent().getLayout()).show(getParent(), "Payment");
     }
 }

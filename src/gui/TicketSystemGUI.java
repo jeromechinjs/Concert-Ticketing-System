@@ -48,10 +48,11 @@ public class TicketSystemGUI extends JFrame {
         // Add panels to CardLayout
         cards.add(loginPanel, "Login");
         cards.add(registrationPanel, "Register");
-        cards.add(ticketSelectionPanel, "Ticket Selection");
         cards.add(paymentPanel, "Payment");
-        cards.add(detailedTicketManagementPanel, "Manage Tickets");
         cards.add(userManagementPanel, "User Management");
+        cards.add(ticketSelectionPanel, "Ticket Selection");
+        cards.add(detailedTicketManagementPanel, "Manage Tickets");
+// Ensure these names match exactly what's used in the login panel transition logic.
 
         // Add the card panel to the JFrame
         getContentPane().add(cards);
