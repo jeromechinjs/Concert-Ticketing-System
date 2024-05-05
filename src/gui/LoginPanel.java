@@ -2,7 +2,10 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+
+import model.Customer;
 import model.Person;
+import model.Staff;
 
 class LoginPanel extends JPanel {
     private JTextField txtUsername;
@@ -39,8 +42,14 @@ class LoginPanel extends JPanel {
             if (person.checkUsernameAndPassword(username, password)) {
                 JOptionPane.showMessageDialog(this, "Login Successful!");
                 found = true;
-                // Switch to the next panel after successful login
-            ((TicketSystemGUI) SwingUtilities.getWindowAncestor(this)).switchTo("Ticket Selection");
+                // Determine the role of the logged-in user
+            if (person instanceof Staff) {
+                // If the user is a staff member, switch to the DetailTicketManagementPanel
+                ((TicketSystemGUI) SwingUtilities.getWindowAncestor(this)).switchTo("Manage Tickets");
+            } else if (person instanceof Customer) {
+                // If the user is a customer, switch to the TicketSelectionPanel
+                ((TicketSystemGUI) SwingUtilities.getWindowAncestor(this)).switchTo("Ticket Selection");
+            }
                 break;
             }
         }
