@@ -25,6 +25,7 @@ public class PaymentPanel extends JPanel {
         PaymentCompletionPanel completionPanel = findPaymentCompletionPanel();
         double amountPaid = parseAmount(txtAmountPaid.getText());
         double change = amountPaid - totalCost;
+        boolean validationPassed = false;
 
 
         if (completionPanel != null) {
@@ -32,33 +33,32 @@ public class PaymentPanel extends JPanel {
 
              // if text field is empty
             if (txtAmountPaid.getText() == null) {
-                System.err.println("Kindly enter the amount to pay.");
-            } 
-
-             // Make sure correct data type (double) is entered only
-            try {  // try parsing a double value (throws error if couldn't be parsed, indicating invalid data type)
-                Double.parseDouble(txtAmountPaid.getText());
-            } catch (NumberFormatException e) {
-                System.err.println("Invalid input. Kindly enter the correct data type.");
+                JOptionPane.showMessageDialog(this, "Kindly enter the amount to pay.", "Error", JOptionPane.ERROR_MESSAGE);
+                validationPassed = false;
+            } else if (amountPaid < totalCost) {  // check payment is correct amount
+                JOptionPane.showMessageDialog(this, "Insufficient amount. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                validationPassed = false;
+            } else {
+                validationPassed = true;
             }
 
-            // check if payment is correct amount
-            if (amountPaid < totalCost) {
-                System.err.println("Insufficient amount. Please try again");
-            }
-            
-            completionPanel.setChange(change);
-            ((CardLayout) getParent().getLayout()).show(getParent(), "PaymentCompletion");
         } else {
             System.err.println("PaymentCompletionPanel not found.");
         }
+
+        if (validationPassed) {
+            // go to payment page
+            completionPanel.setChange(change);
+            ((CardLayout) getParent().getLayout()).show(getParent(), "PaymentCompletion");
+        }
     }
 
+    // Validation: Make sure correct data type (double) is entered only
     private double parseAmount(String text) {
         try {
             return Double.parseDouble(text);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid amount format.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid input. Kindly enter the correct data type.", "Error", JOptionPane.ERROR_MESSAGE);
             return 0;  // Return 0 or handle this scenario appropriately
         }
     }
