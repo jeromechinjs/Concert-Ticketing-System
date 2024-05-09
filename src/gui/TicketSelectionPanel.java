@@ -14,6 +14,7 @@ class TicketSelectionPanel extends JPanel {
     private ArrayList<RockZoneTicket> rockZoneTickets;
     private ArrayList<VIPTicket> vipTickets;
     private ArrayList<NormalZoneTicket> normalZoneTickets;
+    private boolean addedToCart = false; // validation check before proceeding to checkout
 
     public TicketSelectionPanel(ArrayList<TicketInfo> ticketInfos,
                                 ArrayList<RockZoneTicket> rockZoneTickets,
@@ -73,6 +74,7 @@ class TicketSelectionPanel extends JPanel {
             }
 
             JOptionPane.showMessageDialog(this, "Added " + quantity + " " + ticketType + " tickets for " + selectedConcert.getArtist() + " to cart.");
+            addedToCart = true;
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please enter a valid quantity.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -88,7 +90,11 @@ class TicketSelectionPanel extends JPanel {
     }
 
     private void proceedToCheckout() {
-        System.out.println("Proceeding to checkout..."); // Debug print
-        ((CardLayout) getParent().getLayout()).show(getParent(), "Payment");
+        if (addedToCart) { // if tickets not yet added to cart, display error dialog
+            System.out.println("Proceeding to checkout..."); // Debug print
+            ((CardLayout) getParent().getLayout()).show(getParent(), "Payment");
+        } else {
+            JOptionPane.showMessageDialog(this, "Please enter a valid quantity.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
