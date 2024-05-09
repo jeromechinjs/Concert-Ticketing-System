@@ -1,4 +1,5 @@
 package gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -26,13 +27,14 @@ class RegistrationPanel extends JPanel {
         txtPassword = new JTextField();
         add(txtPassword);
 
+        btnGoToLogin = new JButton("Back to Login");
+        btnGoToLogin.addActionListener(e -> switchToLogin());
+        add(btnGoToLogin);
+
         btnRegister = new JButton("Register");
         btnRegister.addActionListener(e -> performRegistration());
         add(btnRegister);
 
-        btnGoToLogin = new JButton("Back to Login");
-        btnGoToLogin.addActionListener(e -> switchToLogin());
-        add(btnGoToLogin);
     }
 
     private void performRegistration() {
