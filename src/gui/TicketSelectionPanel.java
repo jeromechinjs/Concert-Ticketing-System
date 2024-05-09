@@ -17,26 +17,26 @@ class TicketSelectionPanel extends JPanel {
     private boolean addedToCart = false; // validation check before proceeding to checkout
 
     public TicketSelectionPanel(ArrayList<TicketInfo> ticketInfos,
-                                ArrayList<RockZoneTicket> rockZoneTickets,
-                                ArrayList<VIPTicket> vipTickets,
-                                ArrayList<NormalZoneTicket> normalZoneTickets) {
+            ArrayList<RockZoneTicket> rockZoneTickets,
+            ArrayList<VIPTicket> vipTickets,
+            ArrayList<NormalZoneTicket> normalZoneTickets) {
         this.ticketInfos = ticketInfos;
         this.rockZoneTickets = rockZoneTickets;
         this.vipTickets = vipTickets;
         this.normalZoneTickets = normalZoneTickets;
-        
+
         setLayout(new BorderLayout());
         initUIComponents();
     }
 
     private void initUIComponents() {
-        JPanel formPanel = new JPanel(new GridLayout(5, 2, 10, 10));  // Using GridLayout for form elements
+        JPanel formPanel = new JPanel(new GridLayout(5, 2, 10, 10)); // Using GridLayout for form elements
 
         comboConcerts = new JComboBox<>(ticketInfos.toArray(new TicketInfo[0]));
         formPanel.add(new JLabel("Select Concert:"));
         formPanel.add(comboConcerts);
 
-        comboTicketType = new JComboBox<>(new String[]{"Rock", "VIP", "Normal"});
+        comboTicketType = new JComboBox<>(new String[] { "Rock", "VIP", "Normal" });
         formPanel.add(new JLabel("Select Ticket Type:"));
         formPanel.add(comboTicketType);
 
@@ -60,6 +60,7 @@ class TicketSelectionPanel extends JPanel {
             TicketInfo selectedConcert = (TicketInfo) comboConcerts.getSelectedItem();
             String ticketType = (String) comboTicketType.getSelectedItem();
             int quantity = Integer.parseInt(txtQuantity.getText());
+            int desiredNumber = 12; // Change this to your desired number for validation
 
             switch (ticketType) {
                 case "Rock":
@@ -73,20 +74,42 @@ class TicketSelectionPanel extends JPanel {
                     break;
             }
 
-            JOptionPane.showMessageDialog(this, "Added " + quantity + " " + ticketType + " tickets for " + selectedConcert.getArtist() + " to cart.");
             addedToCart = true;
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please enter a valid quantity.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void updateTicketList(ArrayList<? extends Ticket> tickets, TicketInfo concert, int quantity) {
+    private void updateTicketList(ArrayList<? extends Ticket> tickets, TicketInfo concert, int inputQuantity) {
+
+        int quantity = inputQuantity;
+
+        // updated the available seat left
+        int i = 0;
+
         for (Ticket ticket : tickets) {
-            if (ticket.getTicketInfo().equals(concert)) {
-                // Here you would actually adjust ticket quantities, check availability, etc.
-                break;
-            }
+            if (tickets.get(i).getTicketInfo().getArtist().equals(concert.getArtist())) {
+
+                if (quantity > ticket.getAvailableTicket()) {
+                    JOptionPane.showMessageDialog(this,
+                            "Seat is limited!\n" + " Seat left: " + ticket.getAvailableTicket(), "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    break;
+                } else {
+                    int updatedSeat = ticket.getAvailableTicket() - quantity;
+                    ticket.setAvailableTicket(updatedSeat);
+
+                    JOptionPane.showMessageDialog(this, " Seat added: " + quantity + " \n " + concert + "\n" +
+                            tickets.get(i));
+                    break;
+                }
+            } else
+                JOptionPane.showMessageDialog(this,
+                        tickets.get(i).getTicketInfo() + " not matches " + concert);
+
+            i++;
         }
+
     }
 
     private void proceedToCheckout() {

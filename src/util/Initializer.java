@@ -13,7 +13,7 @@ import model.NormalZoneTicket;
 
 public class Initializer {
     // declare initial value here, summon at main
-    
+
     public ArrayList<Person> personInit() {
         ArrayList<Person> person = new ArrayList<Person>();
 
@@ -21,7 +21,8 @@ public class Initializer {
         person.add(new Customer(10000, "Wong Xiao Hei", "0177784557", "abcd1234"));
         person.add(new VIPCustomer(15000, "Lee Ai Kun", "0177789557", "iamikun"));
         person.add(new Staff("Kok", "0199447000", "kok123"));
-
+        person.add(new Staff("", "", ""));
+        person.add(new Customer(15000, "v", "123", ""));
         return person;
     }
 

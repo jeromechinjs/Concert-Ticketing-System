@@ -1,7 +1,8 @@
 package model;/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+              * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+              * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+              */
+
 /**
  *
  * @author User
@@ -9,7 +10,7 @@ package model;/*
 public abstract class Ticket {
     private int price;
     private int quantity;
-    private int TotalQuantity =0;
+    private int TotalQuantity = 0;
     private TicketInfo ticketInfo;
     private int availableTicket;
     private String distFromStage;
@@ -39,11 +40,6 @@ public abstract class Ticket {
         this.quantity = quantity;
     }
 
-    
-    
-
-    
-    
     public String getDistFromStage() {
         return distFromStage;
     }
@@ -54,7 +50,7 @@ public abstract class Ticket {
 
     public Ticket(TicketInfo ticketInfo) {
         this.ticketInfo = ticketInfo;
-        
+
     }
 
     public int getPrice() {
@@ -64,7 +60,6 @@ public abstract class Ticket {
     public void setPrice(int price) {
         this.price = price;
     }
-
 
     public TicketInfo getTicketInfo() {
         return ticketInfo;
@@ -84,7 +79,7 @@ public abstract class Ticket {
 
     @Override
     public abstract String toString();
-    
+
     public abstract void DisplayTicket(int option);
-   
+
 }
