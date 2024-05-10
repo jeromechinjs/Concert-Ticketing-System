@@ -115,10 +115,12 @@ class TicketSelectionPanel extends JPanel {
 
     private void proceedToCheckout() {
         if (addedToCart) { // if tickets not yet added to cart, display error dialog
+            // calculate total to pay
+
             System.out.println("Proceeding to checkout..."); // Debug print
             ((CardLayout) getParent().getLayout()).show(getParent(), "Payment");
         } else {
-            JOptionPane.showMessageDialog(this, "Please enter a valid quantity.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Nothin in cart. Please add to cart first.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
