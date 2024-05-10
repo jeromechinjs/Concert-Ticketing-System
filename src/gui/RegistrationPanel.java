@@ -46,7 +46,7 @@ class RegistrationPanel extends JPanel {
 
         // Validation checks
         // if text field is empty
-        if (username == null && phone == null && password == null) {
+        if (username.isEmpty() || phone.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Kindly fill in all account details.", "Error", JOptionPane.ERROR_MESSAGE);
             validationPassed = false;
         } else {
