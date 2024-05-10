@@ -53,6 +53,10 @@ class TicketSelectionPanel extends JPanel {
         btnCheckout.addActionListener(e -> proceedToCheckout());
         formPanel.add(btnCheckout);
 
+        btnCheckout = new JButton("Info");
+        btnCheckout.addActionListener(e -> DisplaySeat(rockZoneTickets, vipTickets, normalZoneTickets));
+        formPanel.add(btnCheckout);
+
         add(formPanel, BorderLayout.CENTER);
     }
 
@@ -122,7 +126,31 @@ class TicketSelectionPanel extends JPanel {
             System.out.println("Proceeding to checkout..."); // Debug print
             ((CardLayout) getParent().getLayout()).show(getParent(), "Payment");
         } else {
-            JOptionPane.showMessageDialog(this, "Nothin in cart. Please add to cart first.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Nothin in cart. Please add to cart first.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void DisplaySeat(ArrayList<? extends Ticket> tickets, ArrayList<? extends Ticket> tickets2,
+            ArrayList<? extends Ticket> tickets3) {
+        for (Ticket ticket : tickets) {
+            for (Ticket ticket2 : tickets2) {
+                int ind = 0;
+                for (Ticket ticket3 : tickets3) {
+                    JOptionPane.showMessageDialog(this,
+                            ticket.getTicketInfo().getArtist() + "\n-------------------\n" + " Seat Available: "
+                                    + ticket.getAvailableTicket() + " Rock Price: RM" + ticket.getPrice()
+                                    + "\n Seat Available: "
+                                    + ticket.getAvailableTicket() + " VIP Price: RM" + ticket2.getPrice()
+                                    + "\n Seat Available: "
+                                    + ticket.getAvailableTicket() + " Normal Price: RM" + ticket3.getPrice());
+                    ind++;
+
+                }
+                break;
+            }
+            break;
+        }
+
     }
 }
