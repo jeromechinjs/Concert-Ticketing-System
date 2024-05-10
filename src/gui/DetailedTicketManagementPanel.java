@@ -15,8 +15,11 @@ class DetailedTicketManagementPanel extends JPanel {
     private JList<String> listTickets;
     private DefaultListModel<String> modelTickets;
 
-    public DetailedTicketManagementPanel(ArrayList<TicketInfo> ticketInfos, ArrayList<RockZoneTicket> rockZoneTickets,
-            ArrayList<VIPTicket> vipTickets, ArrayList<NormalZoneTicket> normalZoneTickets) {
+    public DetailedTicketManagementPanel(
+            ArrayList<TicketInfo> ticketInfos, 
+            ArrayList<RockZoneTicket> rockZoneTickets,
+            ArrayList<VIPTicket> vipTickets, 
+            ArrayList<NormalZoneTicket> normalZoneTickets) {
         setLayout(new BorderLayout());
         modelTickets = new DefaultListModel<>();
         updateTicketList(rockZoneTickets, vipTickets, normalZoneTickets);

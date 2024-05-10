@@ -16,7 +16,8 @@ class TicketSelectionPanel extends JPanel {
     private ArrayList<NormalZoneTicket> normalZoneTickets;
     private boolean addedToCart = false; // validation check before proceeding to checkout
 
-    public TicketSelectionPanel(ArrayList<TicketInfo> ticketInfos,
+    public TicketSelectionPanel(
+            ArrayList<TicketInfo> ticketInfos,
             ArrayList<RockZoneTicket> rockZoneTickets,
             ArrayList<VIPTicket> vipTickets,
             ArrayList<NormalZoneTicket> normalZoneTickets) {

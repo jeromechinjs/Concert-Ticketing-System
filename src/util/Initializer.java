@@ -86,30 +86,6 @@ public class Initializer {
         // JayChou Ticket
         normalZoneTickets.add(new NormalZoneTicket(800, 798, ticketInfo.get(2), 500));
 
-        // FOR REFRENCING_ REMOVE IT ON SUBMIT
-        // ArrayList<RockZoneTicket> rockZoneTickets = new ArrayList<RockZoneTicket>();
-        // ArrayList<VIPTicket> vipTickets = new ArrayList<VIPTicket>();
-        // ArrayList<NormalZoneTicket> normalZoneTickets = new
-        // ArrayList<NormalZoneTicket>();
-
-        // // CaiXuKun Concert
-        // rockZoneTickets.add(new RockZoneTicket(758, ticketInfo.get(0), 200));
-        // vipTickets.add(new VIPTicket(200, 658, ticketInfo.get(0), 200));
-        // normalZoneTickets.add(new NormalZoneTicket(400, 558, ticketInfo.get(0),
-        // 300));
-
-        // // Twice Concert
-        // rockZoneTickets.add(new RockZoneTicket(888, ticketInfo.get(1), 300));
-        // vipTickets.add(new VIPTicket(300, 788, ticketInfo.get(1), 300));
-        // normalZoneTickets.add(new NormalZoneTicket(600, 688, ticketInfo.get(1),
-        // 400));
-
-        // // JayChou Ticket
-        // rockZoneTickets.add(new RockZoneTicket(998, ticketInfo.get(2), 400));
-        // vipTickets.add(new VIPTicket(400, 898, ticketInfo.get(2), 400));
-        // normalZoneTickets.add(new NormalZoneTicket(800, 798, ticketInfo.get(2),
-        // 500));
-
         return normalZoneTickets;
     }
 }
