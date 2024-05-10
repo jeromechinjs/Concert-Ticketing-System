@@ -75,6 +75,8 @@ class TicketSelectionPanel extends JPanel {
                     break;
             }
 
+            //ticketType[i].getPrice();
+
             addedToCart = true;
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please enter a valid quantity.", "Error", JOptionPane.ERROR_MESSAGE);
