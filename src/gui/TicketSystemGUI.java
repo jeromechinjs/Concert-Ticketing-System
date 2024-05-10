@@ -27,10 +27,10 @@ public class TicketSystemGUI extends JFrame {
     }
 
     private void initComponents() {
-        // Initialize data models or utilities
+        // Initialize starting data models or utilities
         Initializer initializer = new Initializer();
-        ArrayList<Person> persons = initializer.personInit();
-        ArrayList<TicketInfo> ticketInfos = initializer.ticketInit();
+        ArrayList<Person> persons = initializer.personInit(); // creating initial user accounts
+        ArrayList<TicketInfo> ticketInfos = initializer.ticketInit(); // creating concert ticket information
         ArrayList<RockZoneTicket> rockTickets = initializer.rockZoneTicketsInit();
         ArrayList<VIPTicket> vipTickets = initializer.vipTicketsInit();
         ArrayList<NormalZoneTicket> normalTickets = initializer.normalZoneTicketsInit();

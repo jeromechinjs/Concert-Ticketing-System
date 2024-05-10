@@ -23,7 +23,7 @@ public class PaymentPanel extends JPanel {
     private void processPayment() {
         // Update the PaymentCompletionPanel with the calculated change
         PaymentCompletionPanel completionPanel = findPaymentCompletionPanel();
-        double amountPaid = parseAmount(txtAmountPaid.getText());
+        double amountPaid = convertToDouble(txtAmountPaid.getText()); // convertToDouble is a custom function, validates if format is number and not string
         double change = amountPaid - totalCost;
         boolean validationPassed = false;
 
@@ -32,7 +32,7 @@ public class PaymentPanel extends JPanel {
             // validation
 
              // if text field is empty
-            if (txtAmountPaid.getText() == null) {
+            if (txtAmountPaid.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Kindly enter the amount to pay.", "Error", JOptionPane.ERROR_MESSAGE);
                 validationPassed = false;
             } else if (amountPaid < totalCost) {  // check payment is correct amount
@@ -54,7 +54,7 @@ public class PaymentPanel extends JPanel {
     }
 
     // Validation: Make sure correct data type (double) is entered only
-    private double parseAmount(String text) {
+    private double convertToDouble(String text) {
         try {
             return Double.parseDouble(text);
         } catch (NumberFormatException e) {

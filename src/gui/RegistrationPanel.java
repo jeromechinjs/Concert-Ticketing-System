@@ -38,17 +38,33 @@ class RegistrationPanel extends JPanel {
     }
 
     private void performRegistration() {
+        boolean validationPassed = false;
         String username = txtUsername.getText();
         String phone = txtPhone.getText();
         String password = txtPassword.getText();
-        Customer newCustomer = new Customer(0, username, phone, password);
-        persons.add(newCustomer);
-        JOptionPane.showMessageDialog(this, "Registration Successful! Please login.");
-        switchToLogin();
+
+
+        // Validation checks
+        // if text field is empty
+        if (username == null && phone == null && password == null) {
+            JOptionPane.showMessageDialog(this, "Kindly fill in all account details.", "Error", JOptionPane.ERROR_MESSAGE);
+            validationPassed = false;
+        } else {
+            validationPassed = true;
+        }
+
+        if (validationPassed) {
+            Customer newCustomer = new Customer(0, username, phone, password);
+            persons.add(newCustomer);
+            JOptionPane.showMessageDialog(this, "Registration Successful! Please login.");
+            switchToLogin();
+        }
+
     }
 
     private void switchToLogin() {
         CardLayout cardLayout = (CardLayout) getParent().getLayout();
         cardLayout.show(getParent(), "Login");
     }
+
 }
