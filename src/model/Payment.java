@@ -46,6 +46,7 @@ public class Payment {
         this.ticket = ticket;
     }
 
+    // will change this stuffs
     /**
      * Calculates the payment amount based on the ticket price, quantity, and customer discount rate.
      * 
