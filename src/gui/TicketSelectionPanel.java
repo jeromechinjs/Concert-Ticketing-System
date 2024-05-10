@@ -79,7 +79,7 @@ class TicketSelectionPanel extends JPanel {
                     break;
             }
 
-            //ticketType[i].getPrice();
+            // ticketType[i].getPrice();
 
             addedToCart = true;
         } catch (NumberFormatException ex) {
@@ -133,23 +133,21 @@ class TicketSelectionPanel extends JPanel {
 
     private void DisplaySeat(ArrayList<? extends Ticket> tickets, ArrayList<? extends Ticket> tickets2,
             ArrayList<? extends Ticket> tickets3) {
+        int ind = 0;
+        // display all tickets seats from all concert
         for (Ticket ticket : tickets) {
-            for (Ticket ticket2 : tickets2) {
-                int ind = 0;
-                for (Ticket ticket3 : tickets3) {
-                    JOptionPane.showMessageDialog(this,
-                            ticket.getTicketInfo().getArtist() + "\n-------------------\n" + " Seat Available: "
-                                    + ticket.getAvailableTicket() + " Rock Price: RM" + ticket.getPrice()
-                                    + "\n Seat Available: "
-                                    + ticket.getAvailableTicket() + " VIP Price: RM" + ticket2.getPrice()
-                                    + "\n Seat Available: "
-                                    + ticket.getAvailableTicket() + " Normal Price: RM" + ticket3.getPrice());
-                    ind++;
 
-                }
-                break;
-            }
-            break;
+            int Rock = tickets2.get(ind).getPrice();
+            int Norm = tickets.get(ind).getPrice();
+
+            JOptionPane.showMessageDialog(this,
+                    ticket.getTicketInfo().getArtist() + "\n-------------------\n" + " Seat Available: "
+                            + ticket.getAvailableTicket() + " Rock Price: RM" + ticket.getPrice()
+                            + "\n Seat Available: "
+                            + ticket.getAvailableTicket() + " VIP Price: RM" + Rock
+                            + "\n Seat Available: "
+                            + ticket.getAvailableTicket() + " Normal Price: RM" + Norm);
+            ind++;
         }
 
     }
