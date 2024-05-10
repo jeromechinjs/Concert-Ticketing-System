@@ -25,13 +25,14 @@ class LoginPanel extends JPanel {
         txtPassword = new JPasswordField();
         add(txtPassword);
 
+        btnGoToRegister = new JButton("Go to Register");
+        btnGoToRegister.addActionListener(e -> switchToRegister());
+        add(btnGoToRegister);
+
         btnLogin = new JButton("Login");
         btnLogin.addActionListener(e -> performLogin());
         add(btnLogin);
 
-        btnGoToRegister = new JButton("Go to Register");
-        btnGoToRegister.addActionListener(e -> switchToRegister());
-        add(btnGoToRegister);
     }
 
     private void performLogin() {
@@ -52,7 +53,7 @@ class LoginPanel extends JPanel {
                 } else {
                     ((CardLayout) getParent().getLayout()).show(getParent(), "Ticket Selection");
                 }
-                break;  // Exit the loop as login is successful
+                break; // Exit the loop as login is successful
             }
         }
 
@@ -62,12 +63,11 @@ class LoginPanel extends JPanel {
             // Default fallback panel if no specific role-based redirection occurs
             ((CardLayout) getParent().getLayout()).show(getParent(), "DefaultPanel");
         }
-}
-
+    }
 
     private void switchToRegister() {
         CardLayout cardLayout = (CardLayout) getParent().getLayout();
         cardLayout.show(getParent(), "Register");
-    }    
-    
+    }
+
 }

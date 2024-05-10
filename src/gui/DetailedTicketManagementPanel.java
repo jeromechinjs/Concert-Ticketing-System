@@ -1,4 +1,5 @@
 package gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,12 +11,12 @@ import model.NormalZoneTicket;
 class DetailedTicketManagementPanel extends JPanel {
     private JTextField txtArtist, txtDate, txtVenue, txtPrice, txtQuantity;
     private JComboBox<String> cbTicketType;
-    private JButton btnAddTicket, btnUpdateTicket, btnDeleteTicket;
+    private JButton btnAddTicket, btnUpdateTicket, btnDeleteTicket, btnGoToLogin;
     private JList<String> listTickets;
     private DefaultListModel<String> modelTickets;
 
     public DetailedTicketManagementPanel(ArrayList<TicketInfo> ticketInfos, ArrayList<RockZoneTicket> rockZoneTickets,
-                                         ArrayList<VIPTicket> vipTickets, ArrayList<NormalZoneTicket> normalZoneTickets) {
+            ArrayList<VIPTicket> vipTickets, ArrayList<NormalZoneTicket> normalZoneTickets) {
         setLayout(new BorderLayout());
         modelTickets = new DefaultListModel<>();
         updateTicketList(rockZoneTickets, vipTickets, normalZoneTickets);
@@ -30,7 +31,7 @@ class DetailedTicketManagementPanel extends JPanel {
         txtPrice = new JTextField();
         txtQuantity = new JTextField();
 
-        cbTicketType = new JComboBox<>(new String[]{"Rock", "VIP", "Normal"});
+        cbTicketType = new JComboBox<>(new String[] { "Rock", "VIP", "Normal" });
         formPanel.add(new JLabel("Ticket Type:"));
         formPanel.add(cbTicketType);
 
@@ -47,20 +48,29 @@ class DetailedTicketManagementPanel extends JPanel {
 
         btnAddTicket = new JButton("Add Ticket");
         btnAddTicket.addActionListener(e -> addTicket(ticketInfos, rockZoneTickets, vipTickets, normalZoneTickets));
+        btnAddTicket.setBackground(new Color(120, 255, 126));
         formPanel.add(btnAddTicket);
 
         btnUpdateTicket = new JButton("Update Ticket");
+
         btnUpdateTicket.addActionListener(e -> updateTicket());
+        btnUpdateTicket.setBackground(new Color(253, 255, 109));
         formPanel.add(btnUpdateTicket);
 
         btnDeleteTicket = new JButton("Delete Ticket");
         btnDeleteTicket.addActionListener(e -> deleteTicket());
+        btnDeleteTicket.setBackground(new Color(255, 144, 120));
         formPanel.add(btnDeleteTicket);
+
+        btnGoToLogin = new JButton("Back to Login");
+        btnGoToLogin.addActionListener(e -> switchToLogin());
+        formPanel.add(btnGoToLogin);
 
         add(formPanel, BorderLayout.SOUTH);
     }
 
-    private void updateTicketList(ArrayList<RockZoneTicket> rockZoneTickets, ArrayList<VIPTicket> vipTickets, ArrayList<NormalZoneTicket> normalZoneTickets) {
+    private void updateTicketList(ArrayList<RockZoneTicket> rockZoneTickets, ArrayList<VIPTicket> vipTickets,
+            ArrayList<NormalZoneTicket> normalZoneTickets) {
         modelTickets.clear();
         rockZoneTickets.forEach(ticket -> modelTickets.addElement("Rock: " + ticket.toString()));
         vipTickets.forEach(ticket -> modelTickets.addElement("VIP: " + ticket.toString()));
@@ -68,7 +78,7 @@ class DetailedTicketManagementPanel extends JPanel {
     }
 
     private void addTicket(ArrayList<TicketInfo> ticketInfos, ArrayList<RockZoneTicket> rockZoneTickets,
-                           ArrayList<VIPTicket> vipTickets, ArrayList<NormalZoneTicket> normalZoneTickets) {
+            ArrayList<VIPTicket> vipTickets, ArrayList<NormalZoneTicket> normalZoneTickets) {
         TicketInfo newTicketInfo = new TicketInfo(txtArtist.getText(), txtDate.getText(), txtVenue.getText());
         ticketInfos.add(newTicketInfo);
         int price = Integer.parseInt(txtPrice.getText());
@@ -100,7 +110,7 @@ class DetailedTicketManagementPanel extends JPanel {
             String newVenue = txtVenue.getText();
             String newPrice = txtPrice.getText();
             String newQuantity = txtQuantity.getText();
-    
+
             // Update the ticket details in the list
             modelTickets.set(listTickets.getSelectedIndex(), selectedTicket);
             // Notify the user about the update
@@ -122,4 +132,8 @@ class DetailedTicketManagementPanel extends JPanel {
         }
     }
 
+    private void switchToLogin() {
+        CardLayout cardLayout = (CardLayout) getParent().getLayout();
+        cardLayout.show(getParent(), "Login");
+    }
 }
